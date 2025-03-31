@@ -1,15 +1,34 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from telethon import TelegramClient
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
 import os
 
 app = FastAPI()
+
+load_dotenv()
 
 API_ID = os.getenv("TG_API_ID")      # Consigue estos desde https://my.telegram.org
 API_HASH = os.getenv("TG_API_HASH")
 SESSION_FOLDER = "sessions"
 
 os.makedirs(SESSION_FOLDER, exist_ok=True)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class LoginRequest(BaseModel):
     phone: str
@@ -45,7 +64,7 @@ async def confirm_login(req: CodeRequest):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error al verificar código: {str(e)}")
 
-    return {"message": "Login correcto"}
+    return { "message": "Login correcto", "success": True }
 
 @app.get("/saved-files/{phone}")
 async def list_saved_files(phone: str):
