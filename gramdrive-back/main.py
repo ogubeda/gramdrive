@@ -44,7 +44,6 @@ session_name = "sessions/pruebas"
 
 client = TelegramClient(session_name, API_ID, API_HASH)
 
-
 @app.on_event("startup")
 async def startup_event():
     await client.connect()
