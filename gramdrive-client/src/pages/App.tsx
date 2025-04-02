@@ -1,10 +1,13 @@
-import { TelegramLogin } from "../components/telegramLogin/TelegramLogin"
+import { BrowserRouter } from "react-router"
+import { AppRoutes } from "../routes/routes"
 
 function App() {
 
   return (
     <>
-      <TelegramLogin />
+      <BrowserRouter>
+        <AppRoutes />      
+      </BrowserRouter>
     </>
   )
 }

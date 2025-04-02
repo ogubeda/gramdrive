@@ -18,3 +18,8 @@ pip install -r requirements.txt
 ```
 pip install "fastapi[standard]"
 ```
+
+## Lanzar FastAPI
+```
+fastapi dev main.py
+```

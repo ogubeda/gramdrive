@@ -19,7 +19,8 @@ os.makedirs(SESSION_FOLDER, exist_ok=True)
 origins = [
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174"
 ]
 
 app.add_middleware(
@@ -45,35 +46,49 @@ async def start_login(req: LoginRequest):
     client = TelegramClient(session_path, API_ID, API_HASH)
     await client.connect()
 
+    phone = f'+34{req.phone}'
     try:
-        await client.send_code_request(req.phone)
+        await client.send_code_request(phone)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
     clients[req.phone] = client
-    return {"message": "Código enviado"}
+    return { "message": "Código enviado", "success": True }
+
+@app.post("/check-login")
+async def check_login(req: LoginRequest):
+    phone = f'+34{req.phone}'
+    session_path = os.path.join(SESSION_FOLDER, req.phone)
+    client = TelegramClient(session_path, API_ID, API_HASH)
+    await client.connect()
+
+    return { "message": "Login iniciado", "success": True }
 
 @app.post("/confirm-login")
 async def confirm_login(req: CodeRequest):
-    client = clients.get(req.phone)
+    phone = f'+34{req.phone}'
+    client = clients.get(phone)
     if not client:
         raise HTTPException(status_code=400, detail="No se ha iniciado login con este número")
 
     try:
         await client.sign_in(req.phone, req.code)
+        print("Login correcto")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error al verificar código: {str(e)}")
 
     return { "message": "Login correcto", "success": True }
 
-@app.get("/saved-files/{phone}")
+@app.get("/messages/{phone}")
 async def list_saved_files(phone: str):
+    phone = f'+34{phone}'
     session_path = os.path.join(SESSION_FOLDER, phone)
-    client = TelegramClient(session_path, API_ID, API_HASH)
+    client = clients.get(phone)
     await client.connect()
+    print('Se ha realizado la conexion')
 
     files = []
-    async for msg in client.iter_messages("me", limit=50):  # Puedes subir el limit
+    async for msg in client.iter_messages("me"):  # Puedes subir el limit
         if msg.file:
             files.append({
                 "name": msg.file.name or "sin_nombre",
