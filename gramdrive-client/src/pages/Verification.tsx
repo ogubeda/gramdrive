@@ -6,15 +6,15 @@ import { telegramApiService } from "@/services/api/telegram/telegram.api.service
 
 export function VerificationPage() {
   const [code, setCode] = useState<string>('')
-  const { phone } = useParams()
+  const { phone, codeHash } = useParams()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!code || !phone) return
+    if (!code || !phone || !codeHash) return
 
-    const res = await telegramApiService.confirmLogin(phone, code)
+    const res = await telegramApiService.confirmLogin(phone, code, codeHash)
 
     if (res.success) navigate(`/messages/${phone}`)
   }

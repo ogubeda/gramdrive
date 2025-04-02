@@ -13,7 +13,7 @@ export function TelegramLogin () {
     // if (check.success) return navigate(`/messages/${phone}`)
     
     const res = await telegramApiService.login(phone)
-    if (res.success) return navigate(`/verification/${phone}`)
+    if (res.success) return navigate(`/verification/${phone}/${res.phone_code_hash}`)
   }
 
   return (

@@ -20,8 +20,9 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:5173",
-    "http://localhost:5174"
 ]
+
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,68 +35,52 @@ app.add_middleware(
 class LoginRequest(BaseModel):
     phone: str
 
-class CodeRequest(BaseModel):
+class VerificationData(BaseModel):
     phone: str
     code: str
+    codeHash: str
 
-clients = {}
+session_name = "sessions/pruebas"
 
-@app.post("/start-login")
-async def start_login(req: LoginRequest):
-    session_path = os.path.join(SESSION_FOLDER, req.phone)
-    client = TelegramClient(session_path, API_ID, API_HASH)
+client = TelegramClient(session_name, API_ID, API_HASH)
+
+
+@app.on_event("startup")
+async def startup_event():
     await client.connect()
 
-    phone = f'+34{req.phone}'
+@app.on_event("shutdown")
+async def shutdown_event():
+    await client.disconnect()
+
+@app.post("/send-code")
+async def send_code(req: LoginRequest):
+    phone = req.phone
     try:
-        await client.send_code_request(phone)
+        # Envía la solicitud de código. El resultado contiene 'phone_code_hash'
+        result = await client.send_code_request(phone)
+        return { "message": "Código enviado", "phone_code_hash": result.phone_code_hash, "success": True }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-
-    clients[req.phone] = client
-    return { "message": "Código enviado", "success": True }
-
-@app.post("/check-login")
-async def check_login(req: LoginRequest):
-    phone = f'+34{req.phone}'
-    session_path = os.path.join(SESSION_FOLDER, req.phone)
-    client = TelegramClient(session_path, API_ID, API_HASH)
-    await client.connect()
-
-    return { "message": "Login iniciado", "success": True }
-
-@app.post("/confirm-login")
-async def confirm_login(req: CodeRequest):
-    phone = f'+34{req.phone}'
-    client = clients.get(phone)
-    if not client:
-        raise HTTPException(status_code=400, detail="No se ha iniciado login con este número")
-
+    
+@app.post("/verify-code")
+async def verify_code(data: VerificationData):
     try:
-        await client.sign_in(req.phone, req.code)
-        print("Login correcto")
+        # Se utiliza client.sign_in para completar la autenticación
+        user = await client.sign_in(phone=data.phone, code=data.code, phone_code_hash=data.codeHash)
+        return { "message": "Autenticación completada", "user": str(user), "success": True }
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error al verificar código: {str(e)}")
-
-    return { "message": "Login correcto", "success": True }
-
-@app.get("/messages/{phone}")
-async def list_saved_files(phone: str):
-    phone = f'+34{phone}'
-    session_path = os.path.join(SESSION_FOLDER, phone)
-    client = clients.get(phone)
-    await client.connect()
-    print('Se ha realizado la conexion')
-
-    files = []
-    async for msg in client.iter_messages("me"):  # Puedes subir el limit
-        if msg.file:
-            files.append({
-                "name": msg.file.name or "sin_nombre",
-                "size": msg.file.size,
-                "mime": msg.file.mime_type,
-                "date": msg.date.isoformat()
-            })
-
-    await client.disconnect()
-    return {"files": files}
+        raise HTTPException(status_code=400, detail=str(e))
+@app.get("/messages")
+async def get_messages():
+    try:
+        # "me" hace referencia al chat de Mensajes Guardados
+        messages = await client.get_messages("me", limit=20)
+        # Transformamos los mensajes para devolver datos relevantes (por ejemplo, id, texto y fecha)
+        messages_data = [
+            {"id": msg.id, "text": msg.message, "date": msg.date.isoformat() if msg.date else None}
+            for msg in messages
+        ]
+        return {"saved_messages": messages_data}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

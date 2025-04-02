@@ -9,8 +9,8 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/verification/:phone" element={<VerificationPage />} />
-        <Route path="/messages/:phone" element={<MessagesPage />} />
+        <Route path="/verification/:phone/:codeHash" element={<VerificationPage />} />
+        <Route path="/messages" element={<MessagesPage />} />
       </Routes>
     </>
   )
