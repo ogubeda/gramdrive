@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from telethon import TelegramClient
@@ -55,6 +56,11 @@ async def shutdown_event():
 @app.post("/send-code")
 async def send_code(req: LoginRequest):
     phone = req.phone
+
+    #Await de 2 segundos para testear loading
+    await asyncio.sleep(2)
+
+    return { "success": True, "phone_code_hash": "2323sdsd" }
     try:
         # Envía la solicitud de código. El resultado contiene 'phone_code_hash'
         result = await client.send_code_request(phone)

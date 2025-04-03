@@ -1,35 +1,31 @@
-import { useState } from "react"
-import { useNavigate, useParams } from "react-router"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { telegramApiService } from "@/services/api/telegram/telegram.api.service"
+import {  useParams } from "react-router"
+import { VerificationForm } from "@/components/modules/verification/VerificationForm"
 
 export function VerificationPage() {
-  const [code, setCode] = useState<string>('')
   const { phone, codeHash } = useParams()
-  const navigate = useNavigate()
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    if (!code || !phone || !codeHash) return
-
-    const res = await telegramApiService.confirmLogin(phone, code, codeHash)
-
-    if (res.success) navigate(`/messages/${phone}`)
-  }
 
   return (
     <>
-      <main>
-        <h1>Verification</h1>
-        <form onSubmit={handleSubmit}>
-          <Input value={code} onChange={(e) => setCode(e.target.value)} />
-          <Button type="submit">
-            Verify
-          </Button>
-        </form>
-      </main>
+      <div className="flex flex-col gap-4">
+        <div>
+          {
+            (!phone || !codeHash) ?
+            <p className="text-stone-300 font-light text-sm">To start using Gramdrive, you need to login.</p>
+            :
+            (
+              <>
+                <p className="text-stone-300 font-light text-sm">You have recevived a verification code in the Telegram App.</p>
+                <p className="text-stone-300 font-light text-sm">Please, enter the code here.</p>
+              </>
+            )
+          }
+          
+        </div>
+        {
+          phone && codeHash &&
+          <VerificationForm phone={phone} codeHash={codeHash} />
+        }
+      </div>
     </>
   )
 }
