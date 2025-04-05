@@ -22,14 +22,14 @@ export function GlassOTP({ groups, slotsPerGroup, maxLength, value, onChange }: 
           Array(groups)
             .fill(0)
             .map((_, i) => (
-              <InputOTPGroup className="space-x-2" key={i}>
+              <InputOTPGroup className="space-x-2" key={i + 'group'}>
                 {Array(slotsPerGroup)
                   .fill(0)
                   .map((_, j) => (
                     <>
                       <InputOTPSlot
                         className={glassInputOTPClassNames}
-                        key={j} 
+                        key={j + 'slot'} 
                         index={i * slotsPerGroup + j} 
                       />                
                     </>

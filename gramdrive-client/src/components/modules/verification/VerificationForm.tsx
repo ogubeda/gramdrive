@@ -23,7 +23,7 @@ export function VerificationForm({ phone, codeHash }: Props) {
     const res = await telegramApiService.confirmLogin(phone, code, codeHash)
     setIsLoading(false)
 
-    if (res.success) navigate(`/messages`)
+    if (res.success) navigate(`/`)
   }
 
   return (

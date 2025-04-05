@@ -41,7 +41,7 @@ class VerificationData(BaseModel):
     code: str
     codeHash: str
 
-session_name = "sessions/pruebas"
+session_name = "sessions/user"
 
 client = TelegramClient(session_name, API_ID, API_HASH)
 
@@ -57,10 +57,10 @@ async def shutdown_event():
 async def send_code(req: LoginRequest):
     phone = req.phone
 
-    #Await de 2 segundos para testear loading
-    await asyncio.sleep(2)
+    # #Await de 2 segundos para testear loading
+    # await asyncio.sleep(2)
 
-    return { "success": True, "phone_code_hash": "2323sdsd" }
+    # return { "success": True, "phone_code_hash": "2323sdsd" }
     try:
         # Envía la solicitud de código. El resultado contiene 'phone_code_hash'
         result = await client.send_code_request(phone)
@@ -76,6 +76,18 @@ async def verify_code(data: VerificationData):
         return { "message": "Autenticación completada", "user": str(user), "success": True }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/check")
+async def check():
+    try:
+        if await client.is_user_authorized():
+            user = await client.get_me()
+            return { "message": "Autenticación completada", "user": str(user), "success": True }
+        else:
+            return { "message": "No autenticado", "success": False }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 @app.get("/messages")
 async def get_messages():
     try:
@@ -88,4 +100,6 @@ async def get_messages():
         ]
         return {"saved_messages": messages_data}
     except Exception as e:
+        print(e)
+
         raise HTTPException(status_code=400, detail=str(e))

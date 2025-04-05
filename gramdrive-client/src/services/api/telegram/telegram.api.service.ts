@@ -1,4 +1,4 @@
-import { API_TELEGRAM_CONFIRM_LOGIN, API_TELEGRAM_GET_MESSAGES, API_TELEGRAM_LOGIN } from "../../../lib/constants/api.constants"
+import { API_TELEGRAM_CHECK_SESSION, API_TELEGRAM_CONFIRM_LOGIN, API_TELEGRAM_GET_MESSAGES, API_TELEGRAM_LOGIN } from "../../../lib/constants/api.constants"
 
 export const telegramApiService = {
   login: async (phone: string) => {
@@ -29,5 +29,14 @@ export const telegramApiService = {
       },
     }).then(res => res.json())
     .catch(() => ({ files: [] }))
-  }
+  },
+  checkAuth: async () => {
+    return fetch(`${API_TELEGRAM_CHECK_SESSION}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json())
+    .catch(() => ({ success: false }))
+  },
 }

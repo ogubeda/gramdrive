@@ -9,11 +9,10 @@ export function AppRoutes() {
     <>
       <Routes>
         <Route element={<LoginLayout />}>
-          <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/verification/:phone/:codeHash" element={<VerificationPage />} />
         </Route>
-        <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/" element={<MessagesPage />} />
       </Routes>
     </>
   )
