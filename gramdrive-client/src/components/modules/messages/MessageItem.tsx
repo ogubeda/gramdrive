@@ -5,18 +5,18 @@ import DotsVertical from "@/assets/icons/dots-vertical.svg?react"
 import Trash from "@/assets/icons/trash.svg?react"
 import { glassMenuItem } from "@/lib/constants/classNames.constants"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
+import { useMessages } from "@/context/messages/MessagesContext"
 
 interface Props {
   msg: any
-  itemChange: () => void
-
 }
-export function MessageItem({ msg, itemChange }: Props) {
+export function MessageItem({ msg }: Props) {
+  const { refetch } = useMessages()
 
   const handleDeleteClick = async () => {
     const res = await messagesApiService.deleteMessage(msg.id)
 
-    if (res.success) itemChange()
+    if (res.success) refetch()
   }
 
   return (
