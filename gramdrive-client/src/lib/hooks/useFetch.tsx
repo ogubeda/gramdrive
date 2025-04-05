@@ -18,5 +18,7 @@ export function useFetch<T>(promiseFactoryFn: () => Promise<T>, deps: React.Depe
     })
   }, [promiseFactory])
 
-  return { data, error, isLoading }
+  const refetch = useCallback(() => promiseFactory().then(setData), [promiseFactory])
+
+  return { data, error, isLoading, refetch }
 }

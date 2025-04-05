@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { telegramApiService } from "@/services/api/telegram/telegram.api.service"
+import { sessionApiService } from "@/services/api/telegram/session.api.service"
 import { Loader2 } from "lucide-react"
 import { GlassButton } from "@/components/ui/glass/GlassButton"
 import { GlassOTP } from "@/components/ui/glass/GlassOTP"
@@ -20,7 +20,7 @@ export function VerificationForm({ phone, codeHash }: Props) {
     if (!code || !phone || !codeHash) return
 
     setIsLoading(true)
-    const res = await telegramApiService.confirmLogin(phone, code, codeHash)
+    const res = await sessionApiService.confirmLogin(phone, code, codeHash)
     setIsLoading(false)
 
     if (res.success) navigate(`/`)

@@ -98,8 +98,16 @@ async def get_messages():
             {"id": msg.id, "text": msg.message, "date": msg.date.isoformat() if msg.date else None}
             for msg in messages
         ]
-        return {"saved_messages": messages_data}
+        return {"messages": messages_data}
     except Exception as e:
         print(e)
 
+        raise HTTPException(status_code=400, detail=str(e))
+    
+@app.delete("/messages/{message_id}")
+async def delete_message(message_id: int):
+    try:
+        await client.delete_messages("me", [message_id])
+        return {"message": "Mensaje eliminado", "success": True}
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

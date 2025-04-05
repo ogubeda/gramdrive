@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { telegramApiService } from "@/services/api/telegram/telegram.api.service"
+import { sessionApiService } from "@/services/api/telegram/session.api.service"
 import { Loader2 } from "lucide-react"
 import { useNavigate } from "react-router"
 import { GlassButton } from "@/components/ui/glass/GlassButton"
@@ -16,7 +16,7 @@ export function TelegramLogin () {
     if (!phone) return
 
     setIsLoading(true)
-    const res = await telegramApiService.login(phone)
+    const res = await sessionApiService.login(phone)
     setIsLoading(false)
     if (res.success) {
       navigate(`/verification/${phone}/${res.phone_code_hash}`)
