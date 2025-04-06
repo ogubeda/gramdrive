@@ -1,7 +1,7 @@
 import { GlassButton } from "@/components/ui/glass/GlassButton"
 import Plus from "@/assets/icons/plus.svg?react"
 
-export function MessagesHeader() {
+export function DashboardHeader() {
   return (
     <>
       <div className="text-stone-300 bg-white/5 border border-white/20 rounded-xl shadow-lg p-4 backdrop-blur-md shadow-lg">

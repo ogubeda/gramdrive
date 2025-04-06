@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { GlassButton } from "@/components/ui/glass/GlassButton"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import DotsVertical from "@/assets/icons/dots-vertical.svg?react"
 import Trash from "@/assets/icons/trash.svg?react"
-import { glassMenuItem } from "@/lib/constants/classNames.constants"
+import { glassMenuItem, glassPopoverContent } from "@/lib/constants/classNames.constants"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
 import { useMessages } from "@/context/messages/MessagesContext"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface Props {
   msg: any
@@ -21,7 +21,7 @@ export function MessageItem({ msg }: Props) {
 
   return (
     <>
-      <Card className="bg-white/5 border border-white/20 rounded-xl shadow-lg py-4">
+      <Card className="bg-white/5 border backdrop-blur-md border-white/20 rounded-xl shadow-lg py-4">
         <CardContent>
           <div className="flex justify-between gap-2 items-center">
             <p className="text-stone-300 truncate">{msg.text}</p>
@@ -31,7 +31,7 @@ export function MessageItem({ msg }: Props) {
                   <DotsVertical />
                 </GlassButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="p-2 m-1 min-w-64 bg-white/5 backdrop-blur-md border border-white/20 rounded-xl shadow-lg py-4 z-[9999]">
+              <DropdownMenuContent className={glassPopoverContent}>
               <DropdownMenuGroup>
                 <DropdownMenuItem className={glassMenuItem}>
                   <div className="flex items-center gap-2">
