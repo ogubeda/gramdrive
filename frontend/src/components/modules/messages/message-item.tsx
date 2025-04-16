@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { GlassButton } from "@/components/ui/glass/GlassButton"
+import { GlassButton } from "@/components/ui/glass/glass-button"
 import DotsVertical from "@/assets/icons/dots-vertical.svg?react"
 import Trash from "@/assets/icons/trash.svg?react"
-import { glassMenuItem, glassPopoverContent } from "@/lib/constants/classNames.constants"
+import { glassMenuItem, glassPopoverContent } from "@/lib/constants/class-names.constants"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
-import { useMessages } from "@/context/messages/MessagesContext"
+import { useMessages } from "@/context/messages/messages-context"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface Props {

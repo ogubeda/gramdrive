@@ -1,4 +1,4 @@
-import { TelegramLogin } from "@/components/modules/telegramLogin/TelegramLogin"
+import { TelegramLogin } from "@/components/modules/telegramLogin/telegram-login"
 
 export function LoginPage() {
   return (

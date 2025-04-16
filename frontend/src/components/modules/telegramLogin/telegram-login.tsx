@@ -2,8 +2,8 @@ import { useState } from "react"
 import { sessionApiService } from "@/services/api/telegram/session.api.service"
 import { Loader2 } from "lucide-react"
 import { useNavigate } from "react-router"
-import { GlassButton } from "@/components/ui/glass/GlassButton"
-import { GlassInput } from "@/components/ui/glass/GlassInput"
+import { GlassButton } from "@/components/ui/glass/glass-button"
+import { GlassInput } from "@/components/ui/glass/glass-input"
 
 export function TelegramLogin () {
   const [phone, setPhone] = useState<string>('')

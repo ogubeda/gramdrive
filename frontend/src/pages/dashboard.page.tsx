@@ -1,7 +1,7 @@
-import { Messages } from "@/components/modules/messages/Messages"
-import { DashboardHeader } from "@/components/dashboard/DashboardHeader"
-import { DashboardSideBar } from "@/components/dashboard/DashboardSideBar"
-import { MessagesProvider } from "@/context/messages/MessagesContext"
+import { Messages } from "@/components/modules/messages/messages"
+import { DashboardHeader } from "@/components/dashboard/dashboard-header"
+import { DashboardSideBar } from "@/components/dashboard/dashboard-sidebar"
+import { MessagesProvider } from "@/context/messages/messages-context"
 
 export function DashboardPage() {
   return (

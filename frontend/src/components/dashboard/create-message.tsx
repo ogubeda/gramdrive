@@ -1,11 +1,11 @@
-import { GlassButton } from "../ui/glass/GlassButton"
+import { GlassButton } from "../ui/glass/glass-button"
 import Plus from "@/assets/icons/plus.svg?react"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { glassPopoverContent } from "@/lib/constants/classNames.constants"
-import { GlassInput } from "../ui/glass/GlassInput"
+import { glassPopoverContent } from "@/lib/constants/class-names.constants"
+import { GlassInput } from "../ui/glass/glass-input"
 import { useState } from "react"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
-import { useMessages } from "@/context/messages/MessagesContext"
+import { useMessages } from "@/context/messages/messages-context"
 
 export function CreateMessage() {
   const [isOpen, setIsOpen] = useState<boolean>(false)

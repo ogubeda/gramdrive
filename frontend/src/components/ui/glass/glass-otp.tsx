@@ -1,5 +1,5 @@
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../input-otp"
-import { glassInputOTPClassNames } from "@/lib/constants/classNames.constants"
+import { glassInputOTPClassNames } from "@/lib/constants/class-names.constants"
 
 interface Props {
   groups: number

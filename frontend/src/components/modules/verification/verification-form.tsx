@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 import { sessionApiService } from "@/services/api/telegram/session.api.service"
 import { Loader2 } from "lucide-react"
-import { GlassButton } from "@/components/ui/glass/GlassButton"
-import { GlassOTP } from "@/components/ui/glass/GlassOTP"
+import { GlassButton } from "@/components/ui/glass/glass-button"
+import { GlassOTP } from "@/components/ui/glass/glass-otp"
 
 interface Props {
   phone: string

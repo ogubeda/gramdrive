@@ -1,5 +1,5 @@
 import {  useParams } from "react-router"
-import { VerificationForm } from "@/components/modules/verification/VerificationForm"
+import { VerificationForm } from "@/components/modules/verification/verification-form"
 
 export function VerificationPage() {
   const { phone, codeHash } = useParams()

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router"
-import { LoginPage } from "../pages/Login"
-import { VerificationPage } from "../pages/Verification"
-import { DashboardPage } from "../pages/DashboardPage"
-import { LoginLayout } from "@/layouts/LoginLayout"
+import { LoginPage } from "../pages/login.page"
+import { VerificationPage } from "../pages/verification.page"
+import { DashboardPage } from "../pages/dashboard.page"
+import { LoginLayout } from "@/layouts/login-layout"
 
 export function AppRoutes() {
   return (

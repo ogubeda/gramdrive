@@ -1,4 +1,4 @@
-import { GlassButton } from "@/components/ui/glass/GlassButton"
+import { GlassButton } from "@/components/ui/glass/glass-button"
 import Plus from "@/assets/icons/plus.svg?react"
 
 export function DashboardHeader() {

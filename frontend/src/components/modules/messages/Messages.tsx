@@ -1,6 +1,6 @@
-import { MessageItem } from "./MessageItem"
+import { MessageItem } from "./message-item"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useMessages } from "@/context/messages/MessagesContext"
+import { useMessages } from "@/context/messages/messages-context"
 
 export function Messages() {
   const { data, isLoading } = useMessages()
