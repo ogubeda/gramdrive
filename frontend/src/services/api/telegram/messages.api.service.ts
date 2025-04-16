@@ -10,6 +10,16 @@ export const messagesApiService = {
     }).then(res => res.json())
     .catch(() => ({ files: [] }))
   },
+  createMessage: async (message: string) => {
+    return fetch(`${API_TELEGRAM_MESSAGES}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    }).then(res => res.json())
+    .catch(() => ({ success: false }))
+  },
   deleteMessage: async (messageId: number) => {
     return fetch(`${API_TELEGRAM_MESSAGES}/${messageId}`, {
       method: 'DELETE',

@@ -36,6 +36,9 @@ app.add_middleware(
 class LoginRequest(BaseModel):
     phone: str
 
+class CreateMessageRequest(BaseModel):
+    message: str
+
 class VerificationData(BaseModel):
     phone: str
     code: str
@@ -93,6 +96,8 @@ async def get_messages():
     try:
         # "me" hace referencia al chat de Mensajes Guardados
         messages = await client.get_messages("me", limit=20)
+        print(messages)
+
         # Transformamos los mensajes para devolver datos relevantes (por ejemplo, id, texto y fecha)
         messages_data = [
             {"id": msg.id, "text": msg.message, "date": msg.date.isoformat() if msg.date else None}
@@ -102,6 +107,14 @@ async def get_messages():
     except Exception as e:
         print(e)
 
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/messages")
+async def send_message(req: CreateMessageRequest):
+    try:
+        await client.send_message("me", req.message)
+        return {"message": "Mensaje enviado", "success": True}
+    except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
 @app.delete("/messages/{message_id}")
