@@ -3,9 +3,9 @@ import { useFetch } from "@/lib/hooks/useFetch"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
 
 interface MessagesContextType {
-  data: any
+  data: unknown[]
   isLoading: boolean
-  refetch: () => Promise<any>
+  refetch: () => Promise<void>
 }
 
 const MessagesContext = createContext<MessagesContextType | undefined>(undefined)

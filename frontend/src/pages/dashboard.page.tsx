@@ -2,6 +2,7 @@ import { Messages } from "@/components/modules/messages/messages"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardSideBar } from "@/components/dashboard/dashboard-sidebar"
 import { MessagesProvider } from "@/context/messages/messages-context"
+import { CreateMessage } from "@/components/dashboard/create-message"
 
 export function DashboardPage() {
   return (
@@ -14,6 +15,7 @@ export function DashboardPage() {
           <div className="col-span-7 flex flex-col gap-4">
             <DashboardHeader />
             <Messages />
+            <CreateMessage />
           </div>
         </main>
       </MessagesProvider>
