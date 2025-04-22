@@ -1,6 +1,6 @@
-import { GlassButton } from "../ui/glass/glass-button"
+import { GlassButton } from "../../ui/glass/glass-button"
 import Telegram from "@/assets/icons/telegram.svg?react"
-import { GlassInput } from "../ui/glass/glass-input"
+import { GlassInput } from "../../ui/glass/glass-input"
 import { useState } from "react"
 import { messagesApiService } from "@/services/api/telegram/messages.api.service"
 import { useMessages } from "@/context/messages/messages-context"

@@ -91,12 +91,13 @@ async def check():
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+# Get messages
 @app.get("/messages")
 async def get_messages():
     try:
         # "me" hace referencia al chat de Mensajes Guardados
         messages = await client.get_messages("me", limit=20)
-        print(messages)
+        # print(messages)
 
         # Transformamos los mensajes para devolver datos relevantes (por ejemplo, id, texto y fecha)
         messages_data = [
@@ -109,6 +110,7 @@ async def get_messages():
 
         raise HTTPException(status_code=400, detail=str(e))
 
+# Create message
 @app.post("/messages")
 async def send_message(req: CreateMessageRequest):
     try:
@@ -116,7 +118,17 @@ async def send_message(req: CreateMessageRequest):
         return {"message": "Mensaje enviado", "success": True}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
+# Update message
+@app.put("/messages/{message_id}")
+async def update_message(message_id: int, req: CreateMessageRequest):
+  try:
+      await client.edit_message("me", message_id, req.message)
+      return {"message": "Mensaje actualizado", "success": True}
+  except Exception as e:
+      raise HTTPException(status_code=400, detail=str(e))
+
+# Delete message    
 @app.delete("/messages/{message_id}")
 async def delete_message(message_id: int):
     try:

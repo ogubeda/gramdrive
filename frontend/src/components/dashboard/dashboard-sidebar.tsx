@@ -1,4 +1,4 @@
-import { CreateMessage } from "./create-message"
+import { CreateMessage } from "../modules/messages/create-message"
 
 export function DashboardSideBar() {
   return (

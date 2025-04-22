@@ -2,7 +2,8 @@ import { Messages } from "@/components/modules/messages/messages"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { DashboardSideBar } from "@/components/dashboard/dashboard-sidebar"
 import { MessagesProvider } from "@/context/messages/messages-context"
-import { CreateMessage } from "@/components/dashboard/create-message"
+import { CreateMessage } from "@/components/modules/messages/create-message"
+import { UpdateMessage } from "@/components/modules/messages/update-message"
 
 export function DashboardPage() {
   return (
@@ -16,6 +17,7 @@ export function DashboardPage() {
             <DashboardHeader />
             <Messages />
             <CreateMessage />
+            <UpdateMessage />
           </div>
         </main>
       </MessagesProvider>

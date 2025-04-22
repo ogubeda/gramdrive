@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('./animations.css');
 
 body {
@@ -9,4 +10,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.02em;
 }

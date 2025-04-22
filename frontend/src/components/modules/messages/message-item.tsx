@@ -11,7 +11,7 @@ interface Props {
   msg: any
 }
 export function MessageItem({ msg }: Props) {
-  const { refetch } = useMessages()
+  const { refetch, setMessageToUpdate } = useMessages()
 
   const handleDeleteClick = async () => {
     const res = await messagesApiService.deleteMessage(msg.id)
@@ -33,7 +33,10 @@ export function MessageItem({ msg }: Props) {
               </DropdownMenuTrigger>
               <DropdownMenuContent className={glassPopoverContent}>
               <DropdownMenuGroup>
-                <DropdownMenuItem className={glassMenuItem}>
+                <DropdownMenuItem 
+                  className={glassMenuItem}
+                  onClick={() => setMessageToUpdate(msg)}
+                >
                   <div className="flex items-center gap-2">
                     <Trash className="w-4 h-4" />
                     <span>
